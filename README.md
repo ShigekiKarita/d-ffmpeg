@@ -1,6 +1,6 @@
-# d-ffmpeg: ffmpeg wrapper for D
+# d-ffmpeg-light: ffmpeg wrapper for D
 
-This library is thin wrapper to call ffmpeg via subprocess.
+This library is thin wrapper to call ffmpeg to extract audio in subprocess.
 
 ## usage
 
@@ -26,3 +26,5 @@ void main() {
     assert(wav.data.length == 62518); // data is short[] array
 }
 ```
+
+for heavy usage, I recommend you  https://github.com/ljubobratovicrelja/ffmpeg-d

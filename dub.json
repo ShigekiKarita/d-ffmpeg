@@ -1,0 +1,9 @@
+{
+	"name": "d-ffmpeg",
+	"authors": [
+		"Shigeki Karita"
+	],
+	"description": "ffmpeg wrapper function",
+	"copyright": "Copyright © 2018, Shigeki Karita",
+	"license": "BSL-1.0"
+}

@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+d-ffmpeg.so
+d-ffmpeg.dylib
+d-ffmpeg.dll
+d-ffmpeg.a
+d-ffmpeg.lib
+d-ffmpeg-test-*
+*.exe
+*.o
+*.obj
+*.lst
+*.wav
+*.a

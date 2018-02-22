@@ -29,8 +29,7 @@ script:
   - if [ $DC = dmd ] && [ $ARCH = "x86_64" ]; then
       dub build -b=docs --compiler=dmd;
       mv docs/dffmpeg.html docs/index.html;
-      # https://github.com/blog/572-bypassing-jekyll-on-github-pages
-      touch docs/.nojekyll
+      touch docs/.nojekyll;
     fi
 
 after_success:

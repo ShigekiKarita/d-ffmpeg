@@ -172,11 +172,15 @@ struct Audio(T=short)
 
 unittest
 {
+    import std.file : exists;
     import std.net.curl : download;
 
     // prepare audio supported by ffmpeg (e.g., mp3, wav, ..., etc)
     auto file = "test10k.wav";
-    download("https://raw.githubusercontent.com/ShigekiKarita/torch-nmf-ss-toy/master/test10k.wav", file);
+    if (!file.exists)
+    {
+        download("https://raw.githubusercontent.com/ShigekiKarita/torch-nmf-ss-toy/master/test10k.wav", file);
+    }
     assert(ask(file, "sample_rate").to!size_t == 10000);
     assert(ask(file, "channels").to!size_t == 1);
 

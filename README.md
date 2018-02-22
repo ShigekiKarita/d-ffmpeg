@@ -4,6 +4,8 @@ This library is thin wrapper to call ffmpeg to extract audio in subprocess.
 
 ## usage
 
+install ffmpeg (there are static builds) https://www.ffmpeg.org/download.html
+
 ```d
 import dffmpeg;
 import std.stdio;

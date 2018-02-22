@@ -28,6 +28,7 @@ before_install:
   - cd ffmpeg-git*/ && export PATH=`pwd`:$PATH && cd -
 
 script:
+  - wget https://raw.githubusercontent.com/ShigekiKarita/torch-nmf-ss-toy/master/test10k.wav
   - dub test --arch "$ARCH" --build=unittest-cov
   - if [ $DC = dmd ] && [ $ARCH = "x86_64" ]; then
       dub build -b=docs --compiler=dmd;

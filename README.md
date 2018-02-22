@@ -6,6 +6,7 @@ This library is thin wrapper to call ffmpeg to extract audio in subprocess.
 
 ```d
 import dffmpeg;
+import std.stdio;
 import std.net.curl;
 
 void main() {
@@ -13,17 +14,30 @@ void main() {
     auto file = "test10k.wav";
     download("https://raw.githubusercontent.com/ShigekiKarita/torch-nmf-ss-toy/master/test10k.wav", file);
 
-    // auto detect using ffprobe
-    assert(ask!(long, "sample_rate")(file) == 10000);
-    assert(ask!(long, "channels")(file) == 1);
+    // you can ask audio info to ffprobe
+    assert(ask(file, "sample_rate").to!size_t == 10000);
+    assert(ask(file, "channels").to!size_t == 1);
 
-    // loading the audio, you can specify
-    // any quatized type T from (double, float, short(recommended), int, uint)
-    // verbosity from from ("quiet" (default), "error", "warning", ..., "debug")
-    auto wav = loadAudio!short(file, 10000, 1, "quiet");
-    assert(wav.sampleRate == 10000);
-    assert(wav.channels == 1);
-    assert(wav.data.length == 62518); // data is short[] array
+    // load audio (short is nice for PCM16 here)
+    auto wav = Audio!short().load(file);
+    assert(wav.data.length == 62518);
+    assert(wav.sample_rate == 10000);
+    assert(wav.sample_fmt.startsWith("s16"));
+
+    // audio info now (maybe resampled or requantized)
+    writeln(wav.now);
+    // audi info then (origin settings)
+    writeln(wav.then);
+
+    // save audio
+    auto file2 = "test.wav";
+    wav.save(file2);
+    // if you want to keep origin settings
+    wav.save("origin.wav", false);
+
+    // reload audio
+    auto wav2 = Audio!short().load(file2);
+    assert(wav == wav2);
 }
 ```
 

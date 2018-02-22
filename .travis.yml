@@ -15,11 +15,10 @@ env:
 
 matrix:
   include:
-    - {os: linux, d: ldc, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib]]}}}
-    - {os: linux, d: dmd, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib]]}}}
+    - {os: linux, d: ldc, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib, libcurl4-gnutls-dev]]}}}
+    - {os: linux, d: dmd, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib, libcurl4-gnutls-dev]]}}}
 
 before_install:
-  - sudo apt-get install -qq libcurl4-gnutls-dev
   - if [ $ARCH = "x86_64" ]; then
       wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz;
       tar xvf ffmpeg-git-64bit-static.tar.xz;

@@ -1,5 +1,9 @@
 # d-ffmpeg-light: ffmpeg wrapper for D
 
+[![Build Status](https://travis-ci.org/ShigekiKarita/d-ffmpeg-light.svg?branch=master)](https://travis-ci.org/ShigekiKarita/d-ffmpeg-light)
+[![codecov](https://codecov.io/gh/ShigekiKarita/d-ffmpeg-light/branch/master/graph/badge.svg)](https://codecov.io/gh/ShigekiKarita/d-ffmpeg-light)
+
+
 This library is thin wrapper to call ffmpeg to extract audio in subprocess.
 
 ## usage

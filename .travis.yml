@@ -11,23 +11,27 @@ d:
 
 env:
   - ARCH="x86_64"
+  - BITS="64"
 
 matrix:
   include:
-    - {os: linux, d: ldc, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib]]}}}
-    - {os: linux, d: dmd, env: ARCH="x86", addons: {apt: {packages: [[gcc-multilib]]}}}
+    - {os: linux, d: ldc, env: ARCH="x86", env: BITS="32", addons: {apt: {packages: [[gcc-multilib]]}}}
+    - {os: linux, d: dmd, env: ARCH="x86", env: BITS="32", addons: {apt: {packages: [[gcc-multilib]]}}}
 
 before_install:
-  - wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-64bit-static.tar.xz
-  - tar xvf ffmpeg-git-64bit-static.tar.xz
+  - sudo apt-get install -qq libcurl-dev
+  - wget https://johnvansickle.com/ffmpeg/builds/ffmpeg-git-${BITS}bit-static.tar.xz
+  - tar xvf ffmpeg-git-${BITS}bit-static.tar.xz
   - cd ffmpeg-git*/ && export PATH=`pwd`:$PATH && cd -
 
 script:
   - dub test --arch "$ARCH" --build=unittest-cov
-  - if [ $DC = dmd ] && [ $ARCH = "x86_64" ]; then dub build -b=docs --compiler=dmd ; fi
-  - if [ $DC = dmd ] && [ $ARCH = "x86_64" ]; then mv docs/dffmpeg.html docs/index.html; fi
-  # https://github.com/blog/572-bypassing-jekyll-on-github-pages
-  - if [ $DC = dmd ] && [ $ARCH = "x86_64" ]; then touch docs/.nojekyll; fi
+  - if [ $DC = dmd ] && [ $ARCH = "x86_64" ]; then
+      dub build -b=docs --compiler=dmd;
+      mv docs/dffmpeg.html docs/index.html;
+      # https://github.com/blog/572-bypassing-jekyll-on-github-pages
+      touch docs/.nojekyll
+    fi
 
 after_success:
  - bash <(curl -s https://codecov.io/bash)
